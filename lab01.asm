@@ -19,15 +19,19 @@ main:   # Words ending with ':' are **labels**
         #   (so that we can see the labels more clearly)
         # Instruction operands are indented a few spaces, so that the
         #    instruction type is more visible.
-        
-        
-        
       
-        la         $a0, matric      # get address of matric into $a0
-        lw         $v0, 0($a0)       # $v0 gets the value of matric
+        la         $a0, mesg1        # get address of mesg1 into $a0
+        # la is a pseudo-instruction. Notice that is gets converted to 2
+        #   instructions after assemblying.
+        #   Ignore this detail for now. We'll get back to this later
+        addiu      $v0, $zero, 4     # system service 4: print string
+        syscall                      #   located at address $a0
+        # This is a system call. We call the operating system
+        #   to display a string for us. Think of it as a special
+        #   subroutine.
         
-        
-        
+        addiu      $v0, $zero, 5     # system service 5: read integer
+        syscall                      # integer returned in $v0
         
         add        $s1, $zero, $v0   # $s1 = (read value)
                                      # Note: this just moves the value to
@@ -35,7 +39,6 @@ main:   # Words ending with ':' are **labels**
         
         la         $t0, var1         # $t0 gets the **address** of var1
                                      # Note: this is address **not** value of var1
-                                     
         lw         $s0, 0($t0)       # $s0 gets the value of var1
         add        $s0, $s0, $s1     # $s0 = var1 + $s1
         sw         $s0, 0($t0)       # var1 = var1 + (read value)
@@ -64,16 +67,13 @@ exit:
         addiu      $v0, $zero, 10    # system service 10 is exit
         syscall                      # we are outa here.
         
-
-
-
-###############################################################################       
+###############################################################################
 
         .data      # Special assembler **direcrive**. what follows is data
         # Usually data are declared before text. Try to follow that convention 
         #     in your other programs
         #  
-matric: .word 2467    # This will be used by your submitted code
+matric: .word 0    # This will be used by your submitted code
 
 mesg1:  .asciiz "Enter matriculation number: "
         # Data can have labels too, so we can refer to them
