@@ -73,7 +73,7 @@ exit:
         # Usually data are declared before text. Try to follow that convention 
         #     in your other programs
         #  
-matric: .word 2467    # This will be used by your submitted code
+matric: .word 2467
 
 mesg1:  .asciiz "Enter matriculation number: "
         # Data can have labels too, so we can refer to them
